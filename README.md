@@ -1,4 +1,4 @@
-# 【玩转Lighthouse】轻量一键搭建kangle自建CDN节点  
+# 【玩转Lighthouse】轻量kangle
 
 
 #  Kangle脚本简介
