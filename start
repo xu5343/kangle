@@ -1,5 +1,5 @@
 #!/bin/bash
-links="http://kangle.dj1313.com"
+links="https://raw.githubusercontent.com/xu5343/kangle/main"
 files="/root/s-hell"
 file2="/root/s-hell/log"
 file3="/root/hl-tmp"
