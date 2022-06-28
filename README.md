@@ -36,7 +36,7 @@
 
 #Kangle安装方式  
 #请复制以下指令到ssh连接软件粘贴执行  
-
+---
 yum -y install wget;wget https://raw.githubusercontent.com/xu5343/kangle/main/start;sh start
-
+---
 
