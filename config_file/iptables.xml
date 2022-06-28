@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+<block_ip_cmd>/usr/sbin/ipset add kangle ${ip}</block_ip_cmd>
+<unblock_ip_cmd>/usr/sbin/ipset del kangle ${ip}</unblock_ip_cmd>
+<flush_ip_cmd>/usr/sbin/ipset flush kangle</flush_ip_cmd>
+</config>

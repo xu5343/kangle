@@ -1,0 +1,21 @@
+[DEFAULT]
+# 用于指定哪些地址ip可以忽略防御,以空格间隔
+ignoreip = 127.0.0.1/8
+# IP封禁时长（秒）
+bantime  = 3600
+# 过滤的时长（秒）
+findtime  = 600
+# 匹配到的次数阈值
+maxretry = 5
+
+[ssh-iptables]
+# 是否开启
+enabled  = true
+# 过滤规则
+filter   = sshd
+# 动作
+action   = iptables[name=SSH, port=ssh, protocol=tcp]
+# 日志文件的路径
+logpath  = /var/log/secure
+# 匹配到的次数阈值
+maxretry = 5

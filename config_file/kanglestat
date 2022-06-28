@@ -1,0 +1,111 @@
+#!/bin/bash
+#
+# kangle        Startup script for the kangle web server
+#
+# chkconfig: - 85 15
+# processname: kangle
+
+### BEGIN INIT INFO
+# Provides: kangle
+# Required-Start: $local_fs $remote_fs $network $syslog $time
+# Required-Stop: $local_fs $remote_fs $network $syslog $time
+# Short-Description: start and stop kangle server
+# Description: kangle web server
+### END INIT INFO
+. /etc/rc.d/init.d/functions
+KANGLE_LANG=${HTTPD_LANG-"C"}
+
+INITLOG_ARGS=""
+
+prog=kangle
+pidfile=${PIDFILE-/vhs/kangle/var/kangle.pid}
+RETVAL=0
+
+start() {
+        echo -n $"Starting $prog: "
+        LANG=$HTTPD_LANG 
+	ulimit -n 51200
+	/vhs/kangle/bin/kangle
+    if test $? != 0 ; then
+         action $"Start kangle " /bin/false
+    else
+         action $"Start kangle " /bin/true
+    fi
+    return $RETVAL
+}
+stop() {
+	echo -n $"Stopping $prog: "
+	/vhs/kangle/bin/kangle -q
+	 if test $? != 0 ; then
+         action $"Stop kangle " /bin/false
+    else
+         action $"Stop kangle " /bin/true
+    fi
+}
+restart() {
+	echo -n $"Restarting $prog: "
+	stop
+	start
+}
+reload() {
+	echo -n $"Reloading $prog: "
+	/vhs/kangle/bin/kangle -r
+	 if test $? != 0 ; then
+         action $"Reload kangle " /bin/false
+    else
+         action $"Reload kangle " /bin/true
+    fi
+}
+status() {
+    # First, check to see if pid file exists
+    if test -s "$pidfile" ; then 
+      read kangle_pid < "$pidfile"
+      if kill -0 $kangle_pid 2>/dev/null ; then 
+        echo " SUCCESS! kangle running ($kangle_pid)"
+        exit 0
+      else
+        echo " ERROR! kangle is not running, but PID file exists"
+        exit 1
+      fi
+    else
+      # Try to find appropriate kangle process
+      kangle_pid=`pidof /vhs/kangle/bin/kangle`
+
+      # test if multiple pids exist
+      pid_count=`echo $kangle_pid | wc -w`
+      if test $pid_count -gt 1 ; then
+        echo " ERROR! Multiple kangle running but PID file could not be found ($kangle_pid)"
+        exit 5
+      elif test -z $kangle_pid ; then 
+        echo " ERROR! kangle is not running"
+        exit 3
+      else
+        echo " ERROR! kangle is running but PID file could not be found"
+        exit 4
+      fi
+    fi
+}
+# See how we were called.
+case "$1" in
+  start)
+	start
+	;;
+  stop)
+	stop
+	;;
+  restart)
+	stop
+	start
+	;;
+  reload)
+	reload
+	;;
+  status)
+	status
+	;;
+  *)
+	echo $"Usage: $prog {start|stop|restart|reload|status}"
+	exit 1
+esac
+
+exit $RETVAL

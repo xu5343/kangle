@@ -1,0 +1,14 @@
+<!--#start 62-->
+<config>
+<vh name='_dbadmin' doc_root='nodewww/dbadmin' index='index.html,index.php' app_share='0' inherit='off' max_worker='12' user='#990' group='#990'
+certificate='-etc/server.crt'
+certificate_key='-etc/server.key'
+cipher='EECDH+ECDSA+AESGCM EECDH+aRSA+AESGCM EECDH+ECDSA+SHA384 EECDH+ECDSA+SHA256 EECDH+aRSA+SHA384 EECDH+aRSA+SHA256 EECDH+aRSA+RC4 EECDH EDH+aRSA AES256 RC4 !aNULL !eNULL !LOW !3DES !MD5 !EXP !PSK !SRP !DSS'
+protocols='TLSv1 TLSv1.1 TLSv1.2'
+>
+<map file_ext='php' extend='cmd:php56' allow_method='*'/>
+<bind>!*:3313</bind>
+<bind>!*:4413s</bind>
+<host>*</host>
+</vh>
+</config>
